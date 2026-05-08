@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentPreproxy 实验数据报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'PingFang SC', sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+h1 { font-size: 2.2em; text-align: center; padding: 40px 0 10px; background: linear-gradient(135deg, #00d4ff, #7b61ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.subtitle { text-align: center; color: #888; font-size: 0.95em; margin-bottom: 40px; }
+h2 { font-size: 1.5em; color: #00d4ff; margin: 50px 0 20px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+h3 { font-size: 1.15em; color: #7b61ff; margin: 30px 0 15px; }
+.card { background: #12121a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 24px; margin: 20px 0; }
+.card-highlight { border-color: #00d4ff33; background: linear-gradient(135deg, #12121a, #0d1520); }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+.stat-box { background: #1a1a2e; border-radius: 10px; padding: 20px; text-align: center; }
+.stat-num { font-size: 2.5em; font-weight: 700; }
+.stat-num.green { color: #00e676; }
+.stat-num.red { color: #ff5252; }
+.stat-num.blue { color: #00d4ff; }
+.stat-num.purple { color: #7b61ff; }
+.stat-label { font-size: 0.85em; color: #888; margin-top: 5px; }
+table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9em; }
+th { background: #1a1a2e; color: #00d4ff; padding: 10px; text-align: left; font-weight: 600; }
+td { padding: 8px 10px; border-bottom: 1px solid #1e1e2e; }
+tr:hover td { background: #1a1a2e44; }
+.tag-ok { color: #00e676; font-weight: 600; }
+.tag-fail { color: #ff5252; font-weight: 600; }
+.tag-na { color: #666; }
+.chart-container { position: relative; height: 350px; margin: 20px 0; }
+.output-box { background: #0d0d15; border: 1px solid #1e1e2e; border-radius: 8px; padding: 15px; font-family: 'SF Mono', monospace; font-size: 0.85em; line-height: 1.8; max-height: 300px; overflow-y: auto; margin: 10px 0; white-space: pre-wrap; word-break: break-all; }
+.output-box .tag { background: #00d4ff22; color: #00d4ff; padding: 1px 4px; border-radius: 3px; font-weight: 600; }
+.output-box .tag-broken { background: #ff525222; color: #ff5252; padding: 1px 4px; border-radius: 3px; }
+.output-box .repeat { background: #ff980022; color: #ff9800; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; font-weight: 600; }
+.badge-green { background: #00e67622; color: #00e676; }
+.badge-red { background: #ff525222; color: #ff5252; }
+.badge-blue { background: #00d4ff22; color: #00d4ff; }
+.conclusion { background: linear-gradient(135deg, #00d4ff11, #7b61ff11); border: 1px solid #7b61ff33; border-radius: 12px; padding: 24px; margin: 30px 0; }
+.conclusion p { margin: 8px 0; }
+blockquote { border-left: 3px solid #7b61ff; padding: 12px 20px; margin: 15px 0; background: #7b61ff08; font-style: italic; }
+.env-info { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.85em; color: #888; margin: 10px 0; }
+.env-tag { background: #1a1a2e; padding: 4px 10px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>AgentPreproxy 实验数据报告</h1>
+<p class="subtitle">看门狗计数 Tag 机制的实验验证 · 2026-05-08</p>
+
+<div class="env-info">
+  <span class="env-tag">LM Studio</span>
+  <span class="env-tag">Gemma 3 1B (MacBook MLX)</span>
+  <span class="env-tag">Gemma 4 e2b (MacBook MLX)</span>
+  <span class="env-tag">Gemma 2 9B (V100 服务器)</span>
+  <span class="env-tag">总试次: 200+</span>
+</div>
+
+<!-- ============ 核心结论 ============ -->
+<div class="conclusion">
+  <h2 style="margin-top:0; border:none;">核心结论</h2>
+  <blockquote>直接截断策略在合法重复任务上的误杀率为 46-50%，看门狗策略将误杀率降至 0-8%。</blockquote>
+  <blockquote>1B 模型在要求重复 50 次时失控到 282 次；同尺寸模型经过 LoRA 微调后学会了正确的 Tag 递增计数（泛化到未见过的主题），且 Tag 的退化可作为注意力涣散的早期预警信号。</blockquote>
+</div>
+
+<!-- ============ 实验一：误杀对比 ============ -->
+<h2>一、误杀率对比：直接截断 vs 看门狗</h2>
+<p>在 8 种合法重复性任务上（写 N 遍、乘法表、ABC 字母表、日程表等），每任务 3 次重复，对比两种策略：</p>
+
+<div class="stat-grid">
+  <div class="stat-box">
+    <div class="stat-num red">46%</div>
+    <div class="stat-label">直接截断误杀率 (9B)</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num green">0%</div>
+    <div class="stat-label">看门狗误杀率 (9B)</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num red">50%</div>
+    <div class="stat-label">直接截断误杀率 (e2b)</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num green">8%</div>
+    <div class="stat-label">看门狗误杀率 (e2b)</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="chart-container"><canvas id="chartFP"></canvas></div>
+</div>
+
+<div class="card">
+  <h3>逐任务明细</h3>
+  <table>
+    <thead>
+      <tr><th>任务</th><th>模型</th><th>直接截断</th><th>看门狗</th><th>Tags</th><th>结论</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>写 10 遍同一句话</td><td>Gemma2-9B</td><td class="tag-fail">3/3 误杀</td><td class="tag-ok">0/3 误杀</td><td>1-10</td><td><span class="badge badge-green">看门狗全部挽救</span></td></tr>
+      <tr><td>ABC 字母表 3 遍</td><td>Gemma2-9B</td><td class="tag-fail">3/3 误杀</td><td class="tag-ok">0/3 误杀</td><td>1</td><td><span class="badge badge-green">看门狗全部挽救</span></td></tr>
+      <tr><td>乘法表</td><td>Gemma2-9B</td><td class="tag-fail">2/3 误杀</td><td class="tag-ok">0/3 误杀</td><td>1</td><td><span class="badge badge-green">看门狗全部挽救</span></td></tr>
+      <tr><td>日程表重复</td><td>Gemma2-9B</td><td class="tag-fail">3/3 误杀</td><td class="tag-ok">0/3 误杀</td><td>1-5</td><td><span class="badge badge-green">看门狗全部挽救</span></td></tr>
+      <tr><td>写 5 遍同一句话</td><td>Gemma4-e2b</td><td class="tag-fail">3/3 误杀</td><td class="tag-ok">0/3 误杀</td><td>0</td><td><span class="badge badge-green">看门狗放行</span></td></tr>
+      <tr><td>写 10 遍同一句话</td><td>Gemma4-e2b</td><td class="tag-fail">3/3 误杀</td><td class="tag-ok">0/3 误杀</td><td>1</td><td><span class="badge badge-green">看门狗全部挽救</span></td></tr>
+      <tr><td>ABC 字母表 3 遍</td><td>Gemma4-e2b</td><td class="tag-fail">3/3 误杀</td><td class="tag-fail">2/3 误杀</td><td>0-1</td><td><span class="badge badge-blue">e2b 的 Tag 不够稳</span></td></tr>
+      <tr><td>日程表重复</td><td>Gemma4-e2b</td><td class="tag-fail">3/3 误杀</td><td class="tag-ok">0/3 误杀</td><td>5</td><td><span class="badge badge-green">看门狗全部挽救</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ 实验二：失控重复 ============ -->
+<h2>二、失控重复触发实验</h2>
+
+<h3>重复次数梯度（三模型对比）</h3>
+<div class="card">
+  <div class="chart-container"><canvas id="chartGradient"></canvas></div>
+</div>
+
+<div class="card">
+  <table>
+    <thead><tr><th>要求次数</th><th>Gemma 3 1B</th><th>Gemma 4 e2b</th><th>Gemma 2 9B</th></tr></thead>
+    <tbody>
+      <tr><td>5</td><td class="tag-ok">5 ✓</td><td class="tag-ok">5 ✓</td><td class="tag-ok">5 ✓</td></tr>
+      <tr><td>10</td><td>6 (欠交)</td><td class="tag-ok">10 ✓</td><td class="tag-ok">10 ✓</td></tr>
+      <tr><td>20</td><td>9 (欠交)</td><td class="tag-ok">20 ✓</td><td class="tag-ok">20 ✓</td></tr>
+      <tr><td>50</td><td class="tag-fail">282 ✗ 失控</td><td>35 (欠交)</td><td>34 (欠交)</td></tr>
+      <tr><td>100</td><td class="tag-fail">347 ✗ 失控</td><td>67 avg</td><td>53 avg</td></tr>
+      <tr><td>150</td><td>—</td><td>139 avg</td><td>30 (欠交)</td></tr>
+      <tr><td>200</td><td>—</td><td>90-174</td><td>36 (欠交)</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:10px; color:#888;">1B 在 50 次时从"欠交"翻转为"失控"（5.6 倍超额）；e2b 和 9B 在 200 次时仍保持"欠交"模式。</p>
+</div>
+
+<!-- ============ 实验三：Tag 能力 ============ -->
+<h2>三、看门狗 Tag 能力对比</h2>
+
+<div class="stat-grid">
+  <div class="stat-box">
+    <div class="stat-num red">0</div>
+    <div class="stat-label">Gemma 3 1B 合法 Tag 数<br><span style="font-size:0.85em">（输出字面 "N"）</span></div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num green">9</div>
+    <div class="stat-label">Gemma 4 e2b 最大 Tag<br><span style="font-size:0.85em">（WD:1→9 完美递增）</span></div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num green">5</div>
+    <div class="stat-label">Gemma 2 9B 最大 Tag<br><span style="font-size:0.85em">（WD:1→5 完美递增）</span></div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num purple">7</div>
+    <div class="stat-label">1B LoRA 微调后<br><span style="font-size:0.85em">（WD:1→7 后退化）</span></div>
+  </div>
+</div>
+
+<div class="card card-highlight">
+  <h3>可控重复测试：要求精确重复 5 次</h3>
+  <p style="margin-bottom:15px;">同一任务，三个模型的表现天差地别：</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
+    <div>
+      <p><strong style="color:#ff5252;">Gemma 3 1B</strong></p>
+      <p>重复 <strong>65+ 次</strong>直到 token 耗尽</p>
+      <p>无 Tag · <span class="badge badge-red">失控</span></p>
+    </div>
+    <div>
+      <p><strong style="color:#00e676;">Gemma 4 e2b</strong></p>
+      <p>精确 <strong>5 次</strong>后停止</p>
+      <p>WD:1→5 · <span class="badge badge-green">可控</span></p>
+    </div>
+    <div>
+      <p><strong style="color:#00e676;">Gemma 2 9B</strong></p>
+      <p>精确 <strong>5 次</strong>后停止</p>
+      <p>WD:1→2 · <span class="badge badge-green">可控</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 实验四：LoRA 训练 ============ -->
+<h2>四、LoRA 微调：Tag 能力内化</h2>
+<p>对 Gemma 3 1B 进行 LoRA 微调，训练数据与测试内容零重叠。</p>
+
+<div class="card">
+  <div class="chart-container"><canvas id="chartLora"></canvas></div>
+</div>
+
+<div class="card card-highlight">
+  <h3>中间版（100 iter）小说测试 — 渐进退化的完整光谱</h3>
+  <div class="output-box">月下低语。一缕丝OP染红了半场。月球低垂，星河闪烁。时 <span class="tag">⟪WD:1⟫</span> 。剑气如雨落，破土成海。龙息翻滚，寰宇震颤。月下低语。时 <span class="tag">⟪WD:2⟫</span> 。剑气如风，刺破丹心。月球低垂。时 <span class="tag">⟪WD:3⟫</span> 。龙息咆哮，星河燃起。月下低语。时 <span class="tag">⟪WD:4⟫</span> 。剑气如歌，歌唱万物。月球低垂。时 <span class="tag">⟪WD:5⟫</span> 。龙息飞舞，星河灿烂。月下低语。时 <span class="tag">⟪WD:6⟫</span> 。剑气如歌，星河燃起。月球低垂。时 <span class="tag">⟪WD:7⟫</span> 。<span class="repeat">龙息咆哮，星河燃起。月下低语。</span>时 …<br><br><span style="color:#ff5252;">[Tag 消失 → 内容完全复制第一轮 → Tag 从 1 重新开始 → 格式错乱]</span></div>
+  <p style="margin-top:10px;">Tag <span class="tag">WD:1→7</span> 正确递增期间内容正常；WD:7 之后 Tag 消失，内容同步进入重复。<strong>Tag 退化是注意力涣散的早期信号。</strong></p>
+</div>
+
+<div class="card">
+  <h3>三版训练对照</h3>
+  <table>
+    <thead><tr><th>版本</th><th>训练量</th><th>ML 内容</th><th>ML Tag</th><th>小说内容</th><th>小说 Tag</th></tr></thead>
+    <tbody>
+      <tr><td>原始 1B</td><td>—</td><td class="tag-ok">正常</td><td class="tag-fail">字面 N</td><td class="tag-fail">重复 "他缓缓说道"</td><td class="tag-fail">无</td></tr>
+      <tr><td>欠拟合 (50)</td><td>8×50</td><td class="tag-ok">正常</td><td class="tag-fail">无 Tag</td><td class="tag-fail">崩溃</td><td class="tag-fail">无</td></tr>
+      <tr><td><strong>中间版 (100)</strong></td><td><strong>8×100</strong></td><td class="tag-ok"><strong>正常</strong></td><td class="tag-na">无 Tag</td><td><strong style="color:#ff9800;">有内容+有 Tag</strong></td><td class="tag-ok"><strong>WD:1→7</strong></td></tr>
+      <tr><td>过拟合 (300)</td><td>25×300</td><td class="tag-fail">"之间"重复</td><td class="tag-ok">WD:1→20</td><td class="tag-fail">碎片拼接</td><td class="tag-fail">无</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============ 实验五：9B 深度 ============ -->
+<h2>五、Gemma 2 9B 深度实验（V100 服务器）</h2>
+
+<div class="card">
+  <h3>重复梯度（每点 3 次）</h3>
+  <div class="chart-container"><canvas id="chart9B"></canvas></div>
+  <p style="margin-top:10px; color:#888;">9B 模型的失败模式是"提前停下"（欠交），而非"停不下来"（超交）。30 次梯度实验中 0 次失控。</p>
+</div>
+
+<!-- ============ 结论 ============ -->
+<h2>六、实验结论</h2>
+
+<div class="conclusion">
+  <h3>关于误杀</h3>
+  <p>直接截断策略在合法重复任务上误杀 46-50%。看门狗通过 Tag 信号区分可控/失控，将误杀率降至 0-8%。<strong>在 9B 模型上实现了零误杀。</strong></p>
+
+  <h3 style="margin-top:20px;">关于失控重复</h3>
+  <p>1B 模型在要求 50 次重复时爆发失控（实际 282 次）。中大模型（e2b/9B）在 200 次时仍保持"欠交"模式。<strong>模型越大，推迟失控的能力越强——但不能消除。</strong></p>
+
+  <h3 style="margin-top:20px;">关于 Tag 内化</h3>
+  <p>仅 8 条不相关话题的训练数据 + 100 次迭代 LoRA，1B 模型就学会了在未见过的主题上输出正确递增的 Tag（WD:1→7）。Tag 的退化先于内容崩溃出现——<strong>这使 Tag 成为注意力涣散的早期预警信号。</strong></p>
+
+  <h3 style="margin-top:20px;">核心论点的实验支持</h3>
+  <blockquote>再强的算力都改不了"注意力涣散时模型自己感知不到"这件事。AgentPreproxy 的看门狗解决的正是这个结构性问题——不误杀、不放过。</blockquote>
+</div>
+
+<div class="env-info" style="margin-top:50px; padding-top:20px; border-top:1px solid #222;">
+  <span>AgentPreproxy · 2026-05-08</span>
+  <span>LM Studio</span>
+  <span>MacBook Pro (Apple Silicon) + NVIDIA V100</span>
+  <span>Gemma 3 1B / Gemma 4 e2b / Gemma 2 9B</span>
+</div>
+
+</div>
+
+<script>
+// 误杀对比图
+new Chart(document.getElementById('chartFP'), {
+  type: 'bar',
+  data: {
+    labels: ['Gemma2-9B', 'Gemma4-e2b'],
+    datasets: [
+      { label: '直接截断误杀率', data: [46, 50], backgroundColor: '#ff525288', borderColor: '#ff5252', borderWidth: 1 },
+      { label: '看门狗误杀率', data: [0, 8], backgroundColor: '#00e67688', borderColor: '#00e676', borderWidth: 1 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { title: { display: true, text: '合法重复任务误杀率 (%)', color: '#ccc' } },
+    scales: {
+      y: { beginAtZero: true, max: 60, ticks: { color: '#888', callback: v => v + '%' }, grid: { color: '#1e1e2e' } },
+      x: { ticks: { color: '#ccc' }, grid: { display: false } }
+    }
+  }
+});
+
+// 重复梯度
+new Chart(document.getElementById('chartGradient'), {
+  type: 'line',
+  data: {
+    labels: ['5', '10', '20', '50', '100'],
+    datasets: [
+      { label: 'Gemma 3 1B', data: [5, 6, 9, 282, 347], borderColor: '#ff5252', backgroundColor: '#ff525222', tension: 0.3, fill: false },
+      { label: 'Gemma 4 e2b', data: [5, 10, 20, 35, 67], borderColor: '#00d4ff', backgroundColor: '#00d4ff22', tension: 0.3, fill: false },
+      { label: 'Gemma 2 9B', data: [5, 10, 20, 34, 53], borderColor: '#00e676', backgroundColor: '#00e67622', tension: 0.3, fill: false },
+      { label: '期望 (y=x)', data: [5, 10, 20, 50, 100], borderColor: '#ffffff33', borderDash: [5,5], pointRadius: 0, fill: false },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { title: { display: true, text: '要求重复 N 次 → 实际重复次数', color: '#ccc' } },
+    scales: {
+      y: { beginAtZero: true, ticks: { color: '#888' }, grid: { color: '#1e1e2e' }, title: { display: true, text: '实际次数', color: '#888' } },
+      x: { ticks: { color: '#ccc' }, grid: { color: '#1e1e2e' }, title: { display: true, text: '要求次数', color: '#888' } }
+    }
+  }
+});
+
+// LoRA 训练 Loss 对比
+new Chart(document.getElementById('chartLora'), {
+  type: 'bar',
+  data: {
+    labels: ['原始 1B', '欠拟合 (50)', '中间版 (100)', '过拟合 (300)'],
+    datasets: [
+      { label: '小说 Tag 数量', data: [0, 0, 7, 0], backgroundColor: '#00d4ff88', borderColor: '#00d4ff', borderWidth: 1 },
+      { label: '小说内容质量 (0-5)', data: [1, 0, 3, 1], backgroundColor: '#7b61ff88', borderColor: '#7b61ff', borderWidth: 1 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { title: { display: true, text: 'LoRA 训练量 vs 效果（小说测试）', color: '#ccc' } },
+    scales: {
+      y: { beginAtZero: true, ticks: { color: '#888' }, grid: { color: '#1e1e2e' } },
+      x: { ticks: { color: '#ccc' }, grid: { display: false } }
+    }
+  }
+});
+
+// 9B 深度
+new Chart(document.getElementById('chart9B'), {
+  type: 'line',
+  data: {
+    labels: ['5', '10', '15', '20', '30', '50', '80', '100', '150', '200'],
+    datasets: [
+      { label: '实际重复次数 (avg)', data: [5, 10, 15, 20, 26, 33, 43, 53, 30, 36], borderColor: '#00e676', backgroundColor: '#00e67622', tension: 0.3, fill: true },
+      { label: '期望 (y=x)', data: [5, 10, 15, 20, 30, 50, 80, 100, 150, 200], borderColor: '#ffffff33', borderDash: [5,5], pointRadius: 0, fill: false },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { title: { display: true, text: 'Gemma 2 9B: 要求 vs 实际（每点 3 次平均）', color: '#ccc' } },
+    scales: {
+      y: { beginAtZero: true, ticks: { color: '#888' }, grid: { color: '#1e1e2e' }, title: { display: true, text: '实际次数', color: '#888' } },
+      x: { ticks: { color: '#ccc' }, grid: { color: '#1e1e2e' }, title: { display: true, text: '要求次数', color: '#888' } }
+    }
+  }
+});
+</script>
+</body>
+</html>

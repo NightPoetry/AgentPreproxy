@@ -1,0 +1,191 @@
+[
+  {
+    "requested": 5,
+    "trial": 1,
+    "actual": 5,
+    "lost": false,
+    "finish": "stop",
+    "chars": 54,
+    "duration": 6.2301249504089355
+  },
+  {
+    "requested": 5,
+    "trial": 2,
+    "actual": 5,
+    "lost": false,
+    "finish": "stop",
+    "chars": 54,
+    "duration": 3.2000889778137207
+  },
+  {
+    "requested": 5,
+    "trial": 3,
+    "actual": 5,
+    "lost": false,
+    "finish": "stop",
+    "chars": 54,
+    "duration": 3.268913745880127
+  },
+  {
+    "requested": 10,
+    "trial": 1,
+    "actual": 10,
+    "lost": false,
+    "finish": "stop",
+    "chars": 109,
+    "duration": 19.68094491958618
+  },
+  {
+    "requested": 10,
+    "trial": 2,
+    "actual": 10,
+    "lost": false,
+    "finish": "stop",
+    "chars": 109,
+    "duration": 21.42083716392517
+  },
+  {
+    "requested": 10,
+    "trial": 3,
+    "actual": 10,
+    "lost": false,
+    "finish": "stop",
+    "chars": 109,
+    "duration": 14.569025754928589
+  },
+  {
+    "requested": 20,
+    "trial": 1,
+    "actual": 20,
+    "lost": false,
+    "finish": "stop",
+    "chars": 219,
+    "duration": 13.551567077636719
+  },
+  {
+    "requested": 20,
+    "trial": 2,
+    "actual": 20,
+    "lost": false,
+    "finish": "stop",
+    "chars": 219,
+    "duration": 13.84400987625122
+  },
+  {
+    "requested": 20,
+    "trial": 3,
+    "actual": 20,
+    "lost": false,
+    "finish": "stop",
+    "chars": 219,
+    "duration": 11.92536187171936
+  },
+  {
+    "requested": 50,
+    "trial": 1,
+    "actual": 34,
+    "lost": false,
+    "finish": "stop",
+    "chars": 373,
+    "duration": 16.938660144805908
+  },
+  {
+    "requested": 50,
+    "trial": 2,
+    "actual": 38,
+    "lost": false,
+    "finish": "stop",
+    "chars": 417,
+    "duration": 17.359471082687378
+  },
+  {
+    "requested": 50,
+    "trial": 3,
+    "actual": 33,
+    "lost": false,
+    "finish": "stop",
+    "chars": 362,
+    "duration": 24.44226622581482
+  },
+  {
+    "requested": 100,
+    "trial": 1,
+    "actual": 73,
+    "lost": false,
+    "finish": "stop",
+    "chars": 802,
+    "duration": 43.9149010181427
+  },
+  {
+    "requested": 100,
+    "trial": 2,
+    "actual": 63,
+    "lost": false,
+    "finish": "stop",
+    "chars": 692,
+    "duration": 40.46913814544678
+  },
+  {
+    "requested": 100,
+    "trial": 3,
+    "actual": 65,
+    "lost": false,
+    "finish": "stop",
+    "chars": 714,
+    "duration": 41.064241886138916
+  },
+  {
+    "requested": 150,
+    "trial": 1,
+    "actual": 107,
+    "lost": false,
+    "finish": "stop",
+    "chars": 1176,
+    "duration": 58.36275911331177
+  },
+  {
+    "requested": 150,
+    "trial": 2,
+    "actual": 142,
+    "lost": false,
+    "finish": "stop",
+    "chars": 1561,
+    "duration": 72.72843503952026
+  },
+  {
+    "requested": 150,
+    "trial": 3,
+    "actual": 169,
+    "lost": false,
+    "finish": "stop",
+    "chars": 1858,
+    "duration": 87.80116605758667
+  },
+  {
+    "requested": 200,
+    "trial": 1,
+    "actual": 90,
+    "lost": false,
+    "finish": "stop",
+    "chars": 989,
+    "duration": 48.949087142944336
+  },
+  {
+    "requested": 200,
+    "trial": 2,
+    "actual": 0,
+    "lost": false,
+    "finish": "",
+    "chars": 0,
+    "duration": 239.04354310035706
+  },
+  {
+    "requested": 200,
+    "trial": 3,
+    "actual": 174,
+    "lost": false,
+    "finish": "stop",
+    "chars": 1913,
+    "duration": 83.31500697135925
+  }
+]

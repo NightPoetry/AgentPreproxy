@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Rust / Tauri
+gui/src-tauri/target/
+gui/node_modules/
+gui/dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Pytest
+.pytest_cache/
+
+# Env / secrets
+.env
+*.key
+
+# LM Studio model files (too large for git)
+*.safetensors
+fused_model/

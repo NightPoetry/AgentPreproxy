@@ -1,0 +1,742 @@
+[
+  {
+    "model": "Gemma2-9B",
+    "task": "翻译同一句话5种语言",
+    "trial": 1,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "翻译同一句话5种语言",
+    "trial": 2,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "翻译同一句话5种语言",
+    "trial": 3,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "写5遍同一句话",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "写5遍同一句话",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "写5遍同一句话",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "写10遍同一句话",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "写10遍同一句话",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "写10遍同一句话",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "乘法表",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "乘法表",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "乘法表",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "ABC字母表3遍",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "ABC字母表3遍",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "ABC字母表3遍",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "相似格式列表",
+    "trial": 1,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "相似格式列表",
+    "trial": 2,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "相似格式列表",
+    "trial": 3,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "诗歌押韵",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "诗歌押韵",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "诗歌押韵",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "日程表重复",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "日程表重复",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma2-9B",
+    "task": "日程表重复",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "翻译同一句话5种语言",
+    "trial": 1,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [],
+    "tag_sequence_ok": false,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "翻译同一句话5种语言",
+    "trial": 2,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [],
+    "tag_sequence_ok": false,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "翻译同一句话5种语言",
+    "trial": 3,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [],
+    "tag_sequence_ok": false,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "写5遍同一句话",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": false,
+    "tags": [],
+    "tag_sequence_ok": false,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "写5遍同一句话",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": false,
+    "tags": [],
+    "tag_sequence_ok": false,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "写5遍同一句话",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": false,
+    "tags": [],
+    "tag_sequence_ok": false,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "写10遍同一句话",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "写10遍同一句话",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "写10遍同一句话",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "乘法表",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [],
+    "tag_sequence_ok": false,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "乘法表",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "乘法表",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "ABC字母表3遍",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [],
+    "tag_sequence_ok": false,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": true
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "ABC字母表3遍",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [],
+    "tag_sequence_ok": false,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": true
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "ABC字母表3遍",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "相似格式列表",
+    "trial": 1,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "相似格式列表",
+    "trial": 2,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "相似格式列表",
+    "trial": 3,
+    "expected_has_repetition": false,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "诗歌押韵",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "诗歌押韵",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "诗歌押韵",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": false,
+    "has_repetition_wd": false,
+    "tags": [
+      1
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": false,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "日程表重复",
+    "trial": 1,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "日程表重复",
+    "trial": 2,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": true,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  },
+  {
+    "model": "Gemma4-e2b",
+    "task": "日程表重复",
+    "trial": 3,
+    "expected_has_repetition": true,
+    "has_repetition_plain": true,
+    "has_repetition_wd": false,
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tag_sequence_ok": true,
+    "blunt_would_kill": true,
+    "watchdog_would_kill": false
+  }
+]
