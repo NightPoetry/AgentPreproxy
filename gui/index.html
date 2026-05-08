@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,71 +7,133 @@
   <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
-  <h1>AgentPreproxy</h1>
-  <p class="subtitle">AI Attention Watchdog</p>
 
-  <div class="card">
-    <h2>Upstream API</h2>
-    <div class="form-grid">
-      <div class="form-group">
-        <label>OpenAI API URL</label>
-        <input id="openaiUrl" type="text" value="https://api.openai.com" />
-      </div>
-      <div class="form-group">
-        <label>OpenAI API Key</label>
-        <input id="openaiKey" type="password" placeholder="sk-..." />
-      </div>
-      <div class="form-group">
-        <label>Anthropic API URL</label>
-        <input id="anthropicUrl" type="text" value="https://api.anthropic.com" />
-      </div>
-      <div class="form-group">
-        <label>Anthropic API Key</label>
-        <input id="anthropicKey" type="password" placeholder="sk-ant-..." />
-      </div>
+  <!-- Title Bar -->
+  <div class="titlebar">
+    <div class="titlebar-left">
+      <span class="icon">⟪⟫</span>
+      <h1>AgentPreproxy</h1>
+    </div>
+    <div class="titlebar-right">
+      <button class="lang-btn" id="langZh" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn" id="langEn" onclick="setLang('en')">EN</button>
     </div>
   </div>
 
-  <div class="card">
-    <h2>Proxy Settings</h2>
-    <div class="form-grid">
-      <div class="form-group">
-        <label>Port</label>
-        <input id="port" type="number" value="8600" min="1024" max="65535" />
+  <div class="main">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-section" data-i18n="sidebar.config">CONFIGURATION</div>
+      <div class="sidebar-item active" data-panel="upstream">
+        <span>⬡</span> <span data-i18n="sidebar.upstream">Upstream API</span>
       </div>
-      <div class="form-group">
-        <label>Watchdog Mode</label>
-        <select id="mode">
-          <option value="both" selected>both (recommended)</option>
-          <option value="strong">strong (fixed-period Tag)</option>
-          <option value="weak">weak (on-demand)</option>
-          <option value="off">off (passthrough)</option>
-        </select>
+      <div class="sidebar-item" data-panel="proxy">
+        <span>◈</span> <span data-i18n="sidebar.proxy">Proxy Settings</span>
       </div>
-      <div class="form-group">
-        <label>Tag interval (words)</label>
-        <input id="strongK" type="number" value="50" min="10" max="500" />
+      <div class="sidebar-section" data-i18n="sidebar.runtime">RUNTIME</div>
+      <div class="sidebar-item" data-panel="control">
+        <span>▶</span> <span data-i18n="sidebar.control">Control</span>
       </div>
-      <div class="form-group">
-        <label>Python path</label>
-        <input id="pythonPath" type="text" value="python3" placeholder="python3" />
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- Upstream Panel -->
+      <div class="panel" id="panel-upstream">
+        <div class="panel-header">
+          <span data-i18n="upstream.title">Upstream API Configuration</span>
+        </div>
+        <div class="panel-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>openai_base_url</label>
+              <input id="openaiUrl" type="text" value="https://api.openai.com" />
+            </div>
+            <div class="form-group">
+              <label>openai_api_key</label>
+              <input id="openaiKey" type="password" placeholder="sk-..." />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>anthropic_base_url</label>
+              <input id="anthropicUrl" type="text" value="https://api.anthropic.com" />
+            </div>
+            <div class="form-group">
+              <label>anthropic_api_key</label>
+              <input id="anthropicKey" type="password" placeholder="sk-ant-..." />
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- Proxy Panel -->
+      <div class="panel" id="panel-proxy" style="display:none;">
+        <div class="panel-header">
+          <span data-i18n="proxy.title">Proxy Settings</span>
+        </div>
+        <div class="panel-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>listen_port</label>
+              <input id="port" type="number" value="8600" min="1024" max="65535" />
+            </div>
+            <div class="form-group">
+              <label>watchdog_mode</label>
+              <select id="mode">
+                <option value="both" selected data-i18n-opt="mode.both">both (recommended)</option>
+                <option value="strong" data-i18n-opt="mode.strong">strong (fixed-period)</option>
+                <option value="weak" data-i18n-opt="mode.weak">weak (on-demand)</option>
+                <option value="off" data-i18n-opt="mode.off">off (passthrough)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>strong_k <span style="color:#6c7086"># words per tag</span></label>
+              <input id="strongK" type="number" value="50" min="10" max="500" />
+            </div>
+            <div class="form-group">
+              <label>python_path</label>
+              <input id="pythonPath" type="text" value="python3" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Control Panel -->
+      <div class="panel" id="panel-control" style="display:none;">
+        <div class="panel-header">
+          <span data-i18n="control.title">Proxy Control</span>
+        </div>
+        <div class="panel-body">
+          <div class="btn-group">
+            <button class="btn-primary" id="btnStart" data-i18n="control.start">▶ Start Proxy</button>
+            <button class="btn-danger" id="btnStop" disabled data-i18n="control.stop">■ Stop Proxy</button>
+          </div>
+          <div id="endpointBox" class="endpoint-box" style="display:none;">
+            <span data-i18n="control.endpoint">Proxy endpoint:</span>
+            <strong id="endpointUrl"></strong>
+            <div class="hint" data-i18n="control.hint">Point your AI agent software to this URL</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="btn-row">
-    <button class="btn-start" id="btnStart">Start Proxy</button>
-    <button class="btn-stop" id="btnStop" disabled>Stop Proxy</button>
-  </div>
-
-  <div id="statusBar" class="status-bar stopped">
-    <span class="dot off" id="statusDot"></span>
-    <span id="statusText">Not running</span>
-  </div>
-
-  <div class="endpoint-box" id="endpointBox" style="display:none;">
-    Proxy endpoint: <strong id="endpointUrl"></strong><br/>
-    <span style="color:#666; font-size:0.85em;">Point your agent software to this URL</span>
+  <!-- Footer / Status Bar -->
+  <div class="footer">
+    <div class="footer-left">
+      <span class="status-dot off" id="statusDot"></span>
+      <span id="statusText" data-i18n="status.stopped">Stopped</span>
+    </div>
+    <div class="footer-right">
+      <span>v0.1.0</span>
+      <span style="margin: 0 6px;">·</span>
+      <span>watchdog: <span id="footerMode">both</span></span>
+    </div>
   </div>
 
   <script type="module" src="/src/main.ts"></script>
