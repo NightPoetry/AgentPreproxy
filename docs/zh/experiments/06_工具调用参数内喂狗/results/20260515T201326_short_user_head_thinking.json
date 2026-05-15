@@ -1,0 +1,86 @@
+{
+  "case": "short",
+  "finish_reason": "tool_calls",
+  "tool_call": {
+    "name": "file_write",
+    "id": "520065963",
+    "args_raw_len": 1672,
+    "args_raw": "{\"path\":\"/tmp/wd_test_short.md\",\"content\":\"Rust's ownership model revolutionizes memory safety by eliminating garbage collection overhead entirely. <wd:1>Rather than relying on reference counting or manual deallocation, Rust employs compile-time verification that guarantees memory safety without runtime costs. <wd:2>The system centers around three fundamental rules governing how data lives and moves through your program. <wd:3>First, every variable has a single owner controlling its lifecycle completely. <wd:4>Second when you transfer ownership to another variable the original binding becomes invalidated automatically. <wd:5>This prevents dangling references from accessing freed memory during execution entirely. <wd:6>Third Rust performs automatic cleanup when variables fall out of scope systematically. <wd:7>The language distinguishes between owned values and borrowed references carefully throughout your codebase always. <wd:8>Borrowing creates temporary views allowing read access without transferring ownership permanently anywhere ever. <wd:9>Mutability requires exclusive access ensuring no concurrent modifications cause undefined behavior consistently everywhere. <wd:10>This design enables fearless concurrency where data races become impossible by construction fundamentally forever. <wd:11>Developers gain performance matching C while achieving safety surpassing managed languages significantly today always. <wd:12>The compiler acts as an uncompromising guardian enforcing these rules during compilation rigorously always. <wd:13>Understanding ownership unlocks Rust's full potential for systems programming excellence completely everywhere now.\"}",
+    "args_json_ok": true,
+    "args_json_error": null,
+    "args_json": {
+      "path": "/tmp/wd_test_short.md",
+      "content": "Rust's ownership model revolutionizes memory safety by eliminating garbage collection overhead entirely. <wd:1>Rather than relying on reference counting or manual deallocation, Rust employs compile-time verification that guarantees memory safety without runtime costs. <wd:2>The system centers around three fundamental rules governing how data lives and moves through your program. <wd:3>First, every variable has a single owner controlling its lifecycle completely. <wd:4>Second when you transfer ownership to another variable the original binding becomes invalidated automatically. <wd:5>This prevents dangling references from accessing freed memory during execution entirely. <wd:6>Third Rust performs automatic cleanup when variables fall out of scope systematically. <wd:7>The language distinguishes between owned values and borrowed references carefully throughout your codebase always. <wd:8>Borrowing creates temporary views allowing read access without transferring ownership permanently anywhere ever. <wd:9>Mutability requires exclusive access ensuring no concurrent modifications cause undefined behavior consistently everywhere. <wd:10>This design enables fearless concurrency where data races become impossible by construction fundamentally forever. <wd:11>Developers gain performance matching C while achieving safety surpassing managed languages significantly today always. <wd:12>The compiler acts as an uncompromising guardian enforcing these rules during compilation rigorously always. <wd:13>Understanding ownership unlocks Rust's full potential for systems programming excellence completely everywhere now."
+    }
+  },
+  "raw_probe": {
+    "tag_count": 13,
+    "first_num": 1,
+    "last_num": 13,
+    "all_nums": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "monotonic_strict_plus1": true,
+    "monotonic_nondecreasing": true,
+    "malformed_count": 0,
+    "first_malformed": null
+  },
+  "field_probes": {
+    "path": {
+      "tag_count": 0,
+      "first_num": null,
+      "last_num": null,
+      "all_nums": [],
+      "monotonic_strict_plus1": true,
+      "monotonic_nondecreasing": true,
+      "malformed_count": 0,
+      "first_malformed": null
+    },
+    "content": {
+      "tag_count": 13,
+      "first_num": 1,
+      "last_num": 13,
+      "all_nums": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "monotonic_strict_plus1": true,
+      "monotonic_nondecreasing": true,
+      "malformed_count": 0,
+      "first_malformed": null
+    }
+  },
+  "verdict_p1_compliance": "yes",
+  "verdict_p2_grammar": "ok_in_string",
+  "verdict_p3_collapse": "no_collapse",
+  "thinking_present": true,
+  "thinking_chars": 384,
+  "extra_content_chars": 2,
+  "stream_chunks": 97,
+  "elapsed_sec": 12.92,
+  "instr_variant": "user_head",
+  "enable_thinking": true
+}

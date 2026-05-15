@@ -1,0 +1,56 @@
+{
+  "case": "short",
+  "finish_reason": "tool_calls",
+  "tool_call": {
+    "name": "file_write",
+    "id": "880812373",
+    "args_raw_len": 1179,
+    "args_raw": "{\"path\":\"/tmp/wd_test_short.md\",\"content\":\"# Rust Ownership Model\\n\\nRust's ownership system is a unique mechanism that ensures memory safety without needing a garbage collector. At its core, the concept revolves around three simple rules: every value has an owner, each value lives until it goes out of scope, and you can have only one reference to a specific data at any given time.\\n\\nWhen variables are assigned values in Rust, they become owners of that memory location. If another variable takes ownership, the original owner is invalidated, preventing double-free errors and data races automatically during compilation. This strict control allows Rust to guarantee safety by design.\\n\\nFurthermore, borrowing plays a crucial role here. You can temporarily lend references to your data without transferring ownership. These references come in two flavors: immutable, which allows reading but not modifying the underlying data, and mutable, which permits changes but restricts access strictly. Because ownership is checked statically at compile time through borrow checking, Rust achieves zero-cost abstraction while maintaining high performance and safety simultaneously.\"}",
+    "args_json_ok": true,
+    "args_json_error": null,
+    "args_json": {
+      "path": "/tmp/wd_test_short.md",
+      "content": "# Rust Ownership Model\n\nRust's ownership system is a unique mechanism that ensures memory safety without needing a garbage collector. At its core, the concept revolves around three simple rules: every value has an owner, each value lives until it goes out of scope, and you can have only one reference to a specific data at any given time.\n\nWhen variables are assigned values in Rust, they become owners of that memory location. If another variable takes ownership, the original owner is invalidated, preventing double-free errors and data races automatically during compilation. This strict control allows Rust to guarantee safety by design.\n\nFurthermore, borrowing plays a crucial role here. You can temporarily lend references to your data without transferring ownership. These references come in two flavors: immutable, which allows reading but not modifying the underlying data, and mutable, which permits changes but restricts access strictly. Because ownership is checked statically at compile time through borrow checking, Rust achieves zero-cost abstraction while maintaining high performance and safety simultaneously."
+    }
+  },
+  "raw_probe": {
+    "tag_count": 0,
+    "first_num": null,
+    "last_num": null,
+    "all_nums": [],
+    "monotonic_strict_plus1": true,
+    "monotonic_nondecreasing": true,
+    "malformed_count": 0,
+    "first_malformed": null
+  },
+  "field_probes": {
+    "path": {
+      "tag_count": 0,
+      "first_num": null,
+      "last_num": null,
+      "all_nums": [],
+      "monotonic_strict_plus1": true,
+      "monotonic_nondecreasing": true,
+      "malformed_count": 0,
+      "first_malformed": null
+    },
+    "content": {
+      "tag_count": 0,
+      "first_num": null,
+      "last_num": null,
+      "all_nums": [],
+      "monotonic_strict_plus1": true,
+      "monotonic_nondecreasing": true,
+      "malformed_count": 0,
+      "first_malformed": null
+    }
+  },
+  "verdict_p1_compliance": "no",
+  "verdict_p2_grammar": "tag_outside_string",
+  "verdict_p3_collapse": "no_collapse",
+  "thinking_present": true,
+  "thinking_chars": 391,
+  "extra_content_chars": 2,
+  "stream_chunks": 93,
+  "elapsed_sec": 29.08
+}

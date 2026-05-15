@@ -1,0 +1,78 @@
+{
+  "case": "short",
+  "finish_reason": "tool_calls",
+  "tool_call": {
+    "name": "file_write",
+    "id": "281068183",
+    "args_raw_len": 979,
+    "args_raw": "{\"path\":\"/tmp/wd_test_short.md\",\"content\":\"Rust's ownership <wd:1>model is a <wd:2>cornerstone feature that <wd:3>guarantees memory safety <wd:4>without requiring garbage <wd:5>collection. When you <wd:6>write Rust programs, the <wd:7]compiler tracks every value's <wd:8]ownership and determines <wd:9]when variables are no <wd:10]longer needed so it <wd:11]can automatically clean <wd:12]up memory. This system <wd:13]prevents common bugs like <wd:14]dangling pointers and double <wd:15]free errors at compile <wd:16]time. Ownership consists <wd:17]of three key rules <wd:18]that govern how data <wd:19]moves through your program. First, each <wd:20]value has exactly one <wd:21]owner variable. Second, you <wd:22]can reassign ownership to <wd:23]move values between variables, <wd:24]making the old binding invalid. Third, when a variable's scope ends, Rust drops it safely. These rules enable fearless concurrency and memory-safe code without runtime overhead or complexity.\"}",
+    "args_json_ok": true,
+    "args_json_error": null,
+    "args_json": {
+      "path": "/tmp/wd_test_short.md",
+      "content": "Rust's ownership <wd:1>model is a <wd:2>cornerstone feature that <wd:3>guarantees memory safety <wd:4>without requiring garbage <wd:5>collection. When you <wd:6>write Rust programs, the <wd:7]compiler tracks every value's <wd:8]ownership and determines <wd:9]when variables are no <wd:10]longer needed so it <wd:11]can automatically clean <wd:12]up memory. This system <wd:13]prevents common bugs like <wd:14]dangling pointers and double <wd:15]free errors at compile <wd:16]time. Ownership consists <wd:17]of three key rules <wd:18]that govern how data <wd:19]moves through your program. First, each <wd:20]value has exactly one <wd:21]owner variable. Second, you <wd:22]can reassign ownership to <wd:23]move values between variables, <wd:24]making the old binding invalid. Third, when a variable's scope ends, Rust drops it safely. These rules enable fearless concurrency and memory-safe code without runtime overhead or complexity."
+    }
+  },
+  "raw_probe": {
+    "tag_count": 6,
+    "first_num": 1,
+    "last_num": 6,
+    "all_nums": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "monotonic_strict_plus1": true,
+    "monotonic_nondecreasing": true,
+    "malformed_count": 18,
+    "first_malformed": [
+      229,
+      7
+    ]
+  },
+  "field_probes": {
+    "path": {
+      "tag_count": 0,
+      "first_num": null,
+      "last_num": null,
+      "all_nums": [],
+      "monotonic_strict_plus1": true,
+      "monotonic_nondecreasing": true,
+      "malformed_count": 0,
+      "first_malformed": null
+    },
+    "content": {
+      "tag_count": 6,
+      "first_num": 1,
+      "last_num": 6,
+      "all_nums": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "monotonic_strict_plus1": true,
+      "monotonic_nondecreasing": true,
+      "malformed_count": 18,
+      "first_malformed": [
+        186,
+        7
+      ]
+    }
+  },
+  "verdict_p1_compliance": "yes",
+  "verdict_p2_grammar": "ok_in_string",
+  "verdict_p3_collapse": "tag_malformed",
+  "thinking_present": true,
+  "thinking_chars": 499,
+  "extra_content_chars": 2,
+  "stream_chunks": 124,
+  "elapsed_sec": 13.45,
+  "instr_variant": "noplan_user",
+  "enable_thinking": true
+}

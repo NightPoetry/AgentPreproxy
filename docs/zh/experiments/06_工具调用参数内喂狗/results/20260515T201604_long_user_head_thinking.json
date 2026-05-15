@@ -1,0 +1,34 @@
+{
+  "case": "long",
+  "finish_reason": "length",
+  "tool_call": {
+    "name": "file_write",
+    "id": "118337529",
+    "args_raw_len": 0,
+    "args_raw": "",
+    "args_json_ok": false,
+    "args_json_error": "Expecting value: line 1 column 1 (char 0)",
+    "args_json": null
+  },
+  "raw_probe": {
+    "tag_count": 0,
+    "first_num": null,
+    "last_num": null,
+    "all_nums": [],
+    "monotonic_strict_plus1": true,
+    "monotonic_nondecreasing": true,
+    "malformed_count": 0,
+    "first_malformed": null
+  },
+  "field_probes": {},
+  "verdict_p1_compliance": "no",
+  "verdict_p2_grammar": "json_broken",
+  "verdict_p3_collapse": "no_collapse",
+  "thinking_present": true,
+  "thinking_chars": 1563,
+  "extra_content_chars": 2,
+  "stream_chunks": 429,
+  "elapsed_sec": 84.97,
+  "instr_variant": "user_head",
+  "enable_thinking": true
+}
