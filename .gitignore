@@ -30,3 +30,6 @@ Thumbs.db
 # LM Studio model files (too large for git)
 *.safetensors
 fused_model/
+
+# AI assistant local notice
+AI_NOTICE.md
